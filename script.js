@@ -2,9 +2,16 @@ let buttons = document.querySelectorAll('.drum-pad');
 
 function playAudio(event) {
     let audioElement = event.target.getElementsByTagName('audio')[0];
+    let display = document.getElementById('display');
+    let audioId = audioElement.getAttribute('id');
+    let divVolume = document.querySelector('.volume-slider').getElementsByTagName('input')[0];
+
     if (audioElement) {
         let audio = new Audio(audioElement.src);
+        let volume = +divVolume.value;
+        audio.volume = volume;
         audio.play();
+        display.textContent = audioId;
     }
 }
 
@@ -12,7 +19,7 @@ function activeButton() {
     buttons.forEach(elem => {
         elem.addEventListener('mousedown', () => {
             elem.classList.add('toggleClass');
-            console.log(elem);
+            elem.classList.remove('inactiveClass');
         })
     
         elem.addEventListener('mouseup', () => {
@@ -28,6 +35,7 @@ function inactiveButton() {
     buttons.forEach(elem => {
         elem.addEventListener('mousedown', () => {
             elem.classList.add('inactiveClass');
+            elem.classList.remove('toggleClass');
         })
     
         elem.addEventListener('mouseup', () => {
